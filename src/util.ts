@@ -1,5 +1,7 @@
 import { InferenceSession, Tensor } from 'onnxruntime-web'
 
+// 对图片的预处理及将结果转为字符串参照原项目，使用TypeScript实现
+// https://github.com/sml2h3/ddddocr/blob/491ce024dc1bd1c4edd3ba3f84fca5b8317c233c/ddddocr/__init__.py#L2555
 export async function getImageTensor(img: HTMLImageElement): Promise<Tensor> {
   const canvas = document.createElement('canvas')
   canvas.height = 64
@@ -1333,6 +1335,6 @@ function imageDataToTensor(
     transposedData.push((item - 0.5) / 0.5)
   }
 
-  const reult = new Tensor('float32', transposedData, [1, 1, height, width])
-  return reult
+  const result = new Tensor('float32', transposedData, [1, 1, height, width])
+  return result
 }
