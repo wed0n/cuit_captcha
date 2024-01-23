@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CUIT验证码自动填写
 // @namespace    https:/blog.wed0n.cf
-// @version      0.1.0
+// @version      0.1.1
 // @description  驾校教务处登录自动填写验证码
 // @author       Wed0n
 // @license      MIT
@@ -13,8 +13,14 @@
 // ==/UserScript==
 (async () => {
     console.log("cuit_captcha");
+    const username = "";
+    const password = "";
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/gh/wed0n/cuit_captcha@latest/dist/script.js';
     script.type = 'module';
     document.body.appendChild(script);
+    if (username != "" && password != "") {
+        document.getElementById("usernamepsw").value = username;
+        document.getElementById("password").value = password;
+    }
 })();

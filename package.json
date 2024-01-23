@@ -1,7 +1,7 @@
 {
   "name": "cuit_captcha",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,7 +14,6 @@
     "vite-plugin-node-polyfills": "^0.19.0"
   },
   "dependencies": {
-    "@types/fabric": "^5.3.6",
     "onnxruntime-web": "^1.16.3"
   }
 }
