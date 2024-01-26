@@ -1,8 +1,9 @@
 import * as ort from 'onnxruntime-web'
 import { getImageTensor, tensorToStr } from './util'
 
-const resourcePath =
-  'https://cdn.jsdelivr.net/gh/wed0n/cuit_captcha@latest/dist/'
+declare const wed0nPath: string
+
+const resourcePath = wed0nPath
 const img = document.getElementById('imgCode') as HTMLImageElement
 img.setAttribute('crossOrigin', '*')
 const input = document.getElementById('captcha') as HTMLInputElement
