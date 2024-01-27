@@ -5,12 +5,12 @@ declare const wed0nPath: string
 
 const resourcePath = wed0nPath
 const img = document.getElementById('imgCode') as HTMLImageElement
-img.setAttribute('crossOrigin', '*')
 const input = document.getElementById('captcha') as HTMLInputElement
 
 ort.env.wasm.wasmPaths = resourcePath
 let isInited = false
 let session: ort.InferenceSession
+
 async function main() {
   if (!isInited) {
     session = await ort.InferenceSession.create(resourcePath + 'model.onnx')
@@ -23,3 +23,6 @@ async function main() {
 }
 
 img.onload = main
+if (img.complete) {
+  main()
+}
