@@ -4,7 +4,10 @@
 由于onnxruntime-web对vite的支持不够友好，目前需要手动将`node_modules/onnxruntime-web/dist`中对应的`wasm`复制到`dist`中。
 ```bash
 pnpm install
+
 pnpm build
+# 如果需要生成油猴脚本，执行下面这句
+python3 build.py
 ```
 ## 注意
 wasm属于比较新的web技术，因此对浏览器的版本有要求，详情参考 https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface#browser_compatibility
