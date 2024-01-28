@@ -1,9 +1,7 @@
 import * as ort from 'onnxruntime-web'
 import { getImageTensor, tensorToStr } from './util'
 
-declare const wed0nPath: string
-
-const resourcePath = wed0nPath
+declare const resourcePath: string
 const img = document.getElementById('imgCode') as HTMLImageElement
 const input = document.getElementById('captcha') as HTMLInputElement
 
