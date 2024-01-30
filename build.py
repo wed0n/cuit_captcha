@@ -1,13 +1,18 @@
 import glob
 import json
+import shutil
 import subprocess
 import sys
+import os
+import filecmp
+
+copyList = ["node_modules/onnxruntime-web/dist/ort-wasm-simd.wasm"]
 
 result = subprocess.run("pnpm build", shell=True)
 if result.returncode != 0:
     print("Vite构建失败", file=sys.stderr)
     exit(-1)
-jsList = glob.glob("dist/assets/*.js")
+jsList = glob.glob("vite_dist/assets/*.js")
 if len(jsList) != 1:
     print("生成的js文件数不为1", file=sys.stderr)
     exit(-2)
@@ -48,3 +53,9 @@ if (username != "" && password != "") {{
 
 with open(jsList[0], "r", encoding="UTF-8") as last, open("dist/userscript.js", "w", encoding="UTF-8") as result:
     result.write(first+last.read())
+
+for path in copyList:
+    name = os.path.basename(path)
+    target = "dist/"+name
+    if not os.path.exists(target) or not filecmp.cmp(target, path):
+        shutil.copy2(path, target)
