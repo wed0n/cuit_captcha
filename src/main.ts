@@ -17,7 +17,12 @@ async function main() {
   const inputTensor = await getImageTensor(img)
   const outputTensor = await session.run({ input1: inputTensor })
   const result = tensorToStr(outputTensor)
-  input.value = result
+  if (!/^\w{4}$/.test(result)) {
+    const timestamp = new Date().getTime()
+    img.src = `captcha?timestamp=${timestamp}`
+    return
+  }
+  input.value = result.toLowerCase()
 }
 
 img.onload = main
