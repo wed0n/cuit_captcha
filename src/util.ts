@@ -1338,3 +1338,25 @@ function imageDataToTensor(
   const result = new Tensor('float32', transposedData, [1, 1, height, width])
   return result
 }
+
+export function getInputs() {
+  if (window.location.host == 'webvpn.cuit.edu.cn') {
+    const inputs = document.getElementsByClassName(
+      'input-txt'
+    ) as unknown as HTMLInputElement[]
+    return {
+      usernameInput: inputs[0],
+      passwordInput: inputs[1],
+      isJwc: false,
+    }
+  } else if (
+    /.*\.cuit\.edu\.cn[^/]*\/authserver\/.*/.test(window.location.href)
+  ) {
+    return {
+      usernameInput: document.getElementById('usernamepsw') as HTMLInputElement,
+      passwordInput: document.getElementById('password') as HTMLInputElement,
+      isJwc: true,
+    }
+  }
+  throw 'Not cuit website'
+}
