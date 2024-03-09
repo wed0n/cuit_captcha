@@ -12,6 +12,7 @@ const captchaInput = document.getElementById('captcha') as HTMLInputElement
 
 ort.env.wasm.wasmPaths = resourcePath
 let session: ort.InferenceSession
+let shouldClick = true
 
 async function main() {
   const { usernameInput, passwordInput, isJwc } = getInputs()
@@ -28,7 +29,7 @@ async function main() {
     if (username != null && password != null) {
       input(usernameInput, username)
       input(passwordInput, password)
-      loginButton.click()
+      if (shouldClick) loginButton.click()
     }
   }
 
@@ -40,11 +41,13 @@ async function main() {
   async function jwc() {
     if (session == undefined) {
       session = await ort.InferenceSession.create(resourcePath + 'model.onnx')
-      const message = document.getElementsByClassName('tipLi')[0]
+      const messageElement = document.getElementsByClassName('tipLi')[0]
       const observer = new MutationObserver(() => {
-        if (message.innerHTML != '') refreshCaptcha()
+        const message = messageElement.innerHTML
+        if (message.includes('验证码')) refreshCaptcha()
+        else if (message.includes('账号或者密码')) shouldClick = false
       })
-      observer.observe(message, {
+      observer.observe(messageElement, {
         childList: true,
         subtree: false,
       })
