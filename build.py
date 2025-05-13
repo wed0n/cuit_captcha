@@ -1,4 +1,3 @@
-import glob
 import json
 import shutil
 import subprocess
@@ -6,16 +5,16 @@ import sys
 import os
 import filecmp
 
-copyList = ["node_modules/onnxruntime-web/dist/ort-wasm-simd.wasm"]
+copyList = ["node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.jsep.wasm"]
 
-result = subprocess.run("pnpm build", shell=True)
+result = subprocess.run(
+    "npx rollup ./src/main.ts --format iife --plugin @rollup/plugin-typescript --plugin @rollup/plugin-node-resolve",
+    stdout=subprocess.PIPE,
+    shell=True,
+)
 if result.returncode != 0:
-    print("Vite构建失败", file=sys.stderr)
+    print("Rollup 构建失败", file=sys.stderr)
     exit(-1)
-jsList = glob.glob("vite_dist/assets/*.js")
-if len(jsList) != 1:
-    print("生成的js文件数不为1", file=sys.stderr)
-    exit(-2)
 
 version = ""
 with open("package.json") as f:
@@ -23,7 +22,7 @@ with open("package.json") as f:
     version = tmp["version"]
 
 first = """// ==UserScript==
-// @name         CUIT验证码自动填写
+/ @name         CUIT验证码自动填写
 // @namespace    wed0n.cuit.captcha
 // @homepage     https://github.com/wed0n/cuit_captcha
 // @version      {}
@@ -43,13 +42,15 @@ const resourcePath = "https://static.wed0n.top/cuit/captcha/";
 
 console.log("cuit_captcha");
 
-""".format(version)
+""".format(
+    version
+)
 
-with open(jsList[0], "r", encoding="UTF-8") as last, open("dist/userscript.js", "w", encoding="UTF-8") as result:
-    result.write(first+last.read())
+with open("dist/userscript.js", "w", encoding="UTF-8") as target:
+    target.write(first + result.stdout.decode())
 
 for path in copyList:
     name = os.path.basename(path)
-    target = "dist/"+name
+    target = "dist/" + name
     if not os.path.exists(target) or not filecmp.cmp(target, path):
         shutil.copy2(path, target)
