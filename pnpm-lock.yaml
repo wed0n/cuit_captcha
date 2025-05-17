@@ -8,9 +8,15 @@ importers:
 
   .:
     dependencies:
+      fflate:
+        specifier: ^0.8.2
+        version: 0.8.2
+      idb:
+        specifier: ^8.0.3
+        version: 8.0.3
       onnxruntime-web:
-        specifier: ^1.22.0
-        version: 1.22.0
+        specifier: 1.20.1
+        version: 1.20.1
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.1
@@ -207,8 +213,11 @@ packages:
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
-  flatbuffers@25.2.10:
-    resolution: {integrity: sha512-7JlN9ZvLDG1McO3kbX0k4v+SUAg48L1rIwEvN6ZQl/eCtgJz9UylTMzE9wrmYrcorgxm3CX/3T/w5VAub99UUw==}
+  fflate@0.8.2:
+    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
+
+  flatbuffers@1.12.0:
+    resolution: {integrity: sha512-c7CZADjRcl6j0PlvFy0ZqXQ67qSEZfrVPynmnL+2zPc+NtMvrF8Y0QceMo7QqnSPc7+uWjUIAbvCQ5WIKlMVdQ==}
 
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
@@ -225,6 +234,9 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  idb@8.0.3:
+    resolution: {integrity: sha512-LtwtVyVYO5BqRvcsKuB2iUMnHwPVByPCXFXOpuU96IZPPoPN6xjOGxZQ74pgSVVLQWtUOYgyeL4GE98BY5D3wg==}
+
   is-core-module@2.16.1:
     resolution: {integrity: sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==}
     engines: {node: '>= 0.4'}
@@ -235,11 +247,11 @@ packages:
   long@5.3.2:
     resolution: {integrity: sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==}
 
-  onnxruntime-common@1.22.0:
-    resolution: {integrity: sha512-vcuaNWgtF2dGQu/EP5P8UI5rEPEYqXG2sPPe5j9lg2TY/biJF8eWklTMwlDO08iuXq48xJo0awqIpK5mPG+IxA==}
+  onnxruntime-common@1.20.1:
+    resolution: {integrity: sha512-YiU0s0IzYYC+gWvqD1HzLc46Du1sXpSiwzKb63PACIJr6LfL27VsXSXQvt68EzD3V0D5Bc0vyJTjmMxp0ylQiw==}
 
-  onnxruntime-web@1.22.0:
-    resolution: {integrity: sha512-Ud/+EBo6mhuaQWt/OjaOk0iNWjXqJoeeMFr6xQEERZdIZH2OWpGzuujz7lfuOBjUa6TEE/sc4nb7Da5dNL34fg==}
+  onnxruntime-web@1.20.1:
+    resolution: {integrity: sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA==}
 
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
@@ -404,7 +416,9 @@ snapshots:
 
   estree-walker@2.0.2: {}
 
-  flatbuffers@25.2.10: {}
+  fflate@0.8.2: {}
+
+  flatbuffers@1.12.0: {}
 
   fsevents@2.3.3:
     optional: true
@@ -417,6 +431,8 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  idb@8.0.3: {}
+
   is-core-module@2.16.1:
     dependencies:
       hasown: 2.0.2
@@ -425,14 +441,14 @@ snapshots:
 
   long@5.3.2: {}
 
-  onnxruntime-common@1.22.0: {}
+  onnxruntime-common@1.20.1: {}
 
-  onnxruntime-web@1.22.0:
+  onnxruntime-web@1.20.1:
     dependencies:
-      flatbuffers: 25.2.10
+      flatbuffers: 1.12.0
       guid-typescript: 1.0.9
       long: 5.3.2
-      onnxruntime-common: 1.22.0
+      onnxruntime-common: 1.20.1
       platform: 1.3.6
       protobufjs: 7.5.1
 

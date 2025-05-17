@@ -5,10 +5,12 @@ import sys
 import os
 import filecmp
 
-copyList = ["node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.jsep.wasm"]
+copyList = [
+    "node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.wasm",
+]
 
 result = subprocess.run(
-    "npx rollup ./src/main.ts --format iife --plugin @rollup/plugin-typescript --plugin @rollup/plugin-node-resolve",
+    "npx rollup ./src/main.ts --format iife --filterLogs !code:EVAL --plugin @rollup/plugin-typescript --plugin @rollup/plugin-node-resolve",
     stdout=subprocess.PIPE,
     shell=True,
 )
@@ -22,7 +24,7 @@ with open("package.json") as f:
     version = tmp["version"]
 
 first = """// ==UserScript==
-/ @name         CUIT验证码自动填写
+// @name         CUIT验证码自动填写
 // @namespace    wed0n.cuit.captcha
 // @homepage     https://github.com/wed0n/cuit_captcha
 // @version      {}
@@ -31,14 +33,16 @@ first = """// ==UserScript==
 // @license      MIT
 // @match        *.cuit.edu.cn*/authserver/*
 // @match        https://webvpn.cuit.edu.cn/*
-// @icon         https://static.wed0n.top/cuit/captcha/vite.svg
+// @icon         https://blog.wed0n.top/img/avatar.webp
 // @grant        none
 // @sandbox      JavaScript
 // @run-at       document-idle
 // ==/UserScript==
 
-// 如果你不想忍受Cloudflare在璃月的访问速度较慢，而且你有自己的服务器，你可以修改这个资源路径。
+// 如果你不想忍受 Cloudflare 在璃月的访问速度较慢，而且你有自己的服务器，你可以修改这个资源路径。
 const resourcePath = "https://static.wed0n.top/cuit/captcha/";
+// 启用 indexDB 缓存 WASM 运行库与模型文件，能大大提高脚本运行速度，但会增加磁盘空间消耗。
+const useIndexDB = true;
 
 console.log("cuit_captcha");
 

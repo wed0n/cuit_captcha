@@ -1,17 +1,22 @@
-import * as ort from 'onnxruntime-web'
-import { getImageTensor, getInputs, tensorToStr } from './util'
+import {
+  getImageTensor,
+  getInputs,
+  getSession,
+  tensorToStr
+} from './util'
 
 declare const resourcePath: string
+declare const useIndexDB: boolean
 declare function checkLogin(): void
+
 const USERNAME = 'username'
 const PASSWORD = 'password'
+
 const username = localStorage.getItem(USERNAME)
 const password = localStorage.getItem(PASSWORD)
 const img = document.getElementById('imgCode') as HTMLImageElement
 const captchaInput = document.getElementById('captcha') as HTMLInputElement
 
-ort.env.wasm.wasmPaths = resourcePath
-let session: ort.InferenceSession
 let shouldClick = true
 
 async function main() {
@@ -39,19 +44,17 @@ async function main() {
   }
 
   async function jwc() {
-    if (session == undefined) {
-      session = await ort.InferenceSession.create(resourcePath + 'model.onnx')
-      const messageElement = document.getElementsByClassName('tipLi')[0]
-      const observer = new MutationObserver(() => {
-        const message = messageElement.innerHTML
-        if (message.includes('验证码')) refreshCaptcha()
-        else if (message.includes('账号或者密码')) shouldClick = false
-      })
-      observer.observe(messageElement, {
-        childList: true,
-        subtree: false,
-      })
-    }
+    const session = await getSession(resourcePath, useIndexDB)
+    const messageElement = document.getElementsByClassName('tipLi')[0]
+    const observer = new MutationObserver(() => {
+      const message = messageElement.innerHTML
+      if (message.includes('验证码')) refreshCaptcha()
+      else if (message.includes('账号或者密码')) shouldClick = false
+    })
+    observer.observe(messageElement, {
+      childList: true,
+      subtree: false,
+    })
 
     const inputTensor = await getImageTensor(img)
     const outputTensor = await session.run({ input1: inputTensor })

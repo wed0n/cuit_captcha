@@ -1,7 +1,7 @@
 {
   "name": "cuit_captcha",
   "private": true,
-  "version": "0.1.6",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,6 +16,8 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "onnxruntime-web": "^1.22.0"
+    "fflate": "^0.8.2",
+    "idb": "^8.0.3",
+    "onnxruntime-web": "1.20.1"
   }
 }
